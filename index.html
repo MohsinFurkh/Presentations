@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Presentations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid #e0e6ed;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .subject-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .subject-header {
+            background: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .subject-header:hover {
+            background: #2980b9;
+        }
+
+        .presentation-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #f8f9fa;
+        }
+
+        .presentation-list.show {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .presentation-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s;
+        }
+
+        .presentation-item:last-child {
+            border-bottom: none;
+        }
+
+        .presentation-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .presentation-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        .presentation-title {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .presentation-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .empty-message {
+            padding: 2rem;
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .presentation-link {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Academic Presentations</h1>
+            <p class="subtitle">A collection of my academic and research presentations</p>
+        </header>
+
+        <main>
+            <!-- Discrete Mathematics Section -->
+            <div class="subject-section">
+                <div class="subject-header" onclick="toggleSection('discrete-math')">
+                    <span>Discrete Mathematics</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="presentation-list" id="discrete-math">
+                    <!-- Presentations will be added here dynamically -->
+                    <div class="empty-message">No presentations available yet.</div>
+                </div>
+            </div>
+
+            <!-- PhD Research Section -->
+            <div class="subject-section">
+                <div class="subject-header" onclick="toggleSection('phd-research')">
+                    <span>PhD Research</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="presentation-list" id="phd-research">
+                    <div class="presentation-item">
+                        <a href="./PhD Research Presentation/PhD Presentation.html" class="presentation-link">
+                            <span class="presentation-title">PhD Research Presentation</span>
+                            <span class="presentation-date">July 2025</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more subject sections as needed -->
+            <div class="subject-section">
+                <div class="subject-header" onclick="toggleSection('future-subjects')">
+                    <span>Future Subjects</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="presentation-list" id="future-subjects">
+                    <div class="empty-message">More subjects and presentations coming soon!</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Toggle section visibility
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const header = section.previousElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            
+            section.classList.toggle('show');
+            
+            // Rotate the arrow icon
+            if (section.classList.contains('show')) {
+                icon.textContent = '▲';
+            } else {
+                icon.textContent = '▼';
+            }
+        }
+
+        // Automatically expand the first section with presentations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find the first non-empty section and expand it
+            const sections = document.querySelectorAll('.presentation-list');
+            sections.forEach(section => {
+                if (section.querySelector('.presentation-item')) {
+                    section.classList.add('show');
+                    section.previousElementSibling.querySelector('.toggle-icon').textContent = '▲';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
