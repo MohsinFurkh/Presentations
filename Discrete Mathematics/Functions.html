@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <!-- Chosen Palette: Warm Neutral Harmony -->
     <!-- Application Structure Plan: A four-section, single-page application (Core Concepts, Properties, Types, Applications) with top navigation. This non-linear, thematic structure allows users to explore topics based on interest rather than following the linear flow of a document. Interactivity (visualizers, calculators, charts) is prioritized to transform passive reading into active learning and exploration. The goal is to make abstract concepts tangible and easier to grasp. -->
     <!-- Visualization & Content Choices: 
@@ -161,14 +163,15 @@
     </nav>
 
     <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Functions in Discrete Mathematics</h1>
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-1">Functions in Discrete Mathematics</h1>
             <p class="text-lg text-gray-600">An Interactive Exploration</p>
         </header>
 
         <nav class="flex justify-center space-x-4 md:space-x-6 border-b border-gray-200 mb-12 overflow-x-auto py-2">
             <a href="#core" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Core Concepts</a>
             <a href="#properties" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Properties</a>
+            <a href="#counting-functions" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Counting</a>
             <a href="#composition" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Composition</a>
             <a href="#inverse" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Inverse</a>
             <a href="#types" class="nav-link text-sm md:text-lg font-medium whitespace-nowrap">Key Types</a>
@@ -184,39 +187,155 @@
                         In discrete mathematics, a function is a rule that assigns each element from a set called the <span class="highlight">Domain</span> to <span class="highlight">exactly one</span> element in a set called the <span class="highlight">Codomain</span>. This "exactly one output" rule is the cornerstone of how functions work, ensuring predictability and reliability in mathematical and computational systems.
                     </p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="card p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold mb-4 text-center">Interactive Mapping</h3>
-                        <div class="flex justify-around items-center h-48 relative" id="mapping-viz">
-                            <div class="text-center">
-                                <h4 class="font-bold mb-2">Domain</h4>
-                                <div class="space-y-2" id="domain-set">
-                                    <div class="w-12 h-8 flex items-center justify-center bg-blue-100 text-blue-800 rounded-md cursor-pointer hover:bg-blue-200" data-val="1">A</div>
-                                    <div class="w-12 h-8 flex items-center justify-center bg-blue-100 text-blue-800 rounded-md cursor-pointer hover:bg-blue-200" data-val="2">B</div>
-                                    <div class="w-12 h-8 flex items-center justify-center bg-blue-100 text-blue-800 rounded-md cursor-pointer hover:bg-blue-200" data-val="3">C</div>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <h4 class="font-bold mb-2">Codomain</h4>
-                                <div class="space-y-2" id="codomain-set">
-                                    <div class="w-12 h-8 flex items-center justify-center bg-red-100 text-red-800 rounded-md" data-val="x">X</div>
-                                    <div class="w-12 h-8 flex items-center justify-center bg-red-100 text-red-800 rounded-md" data-val="y">Y</div>
-                                    <div class="w-12 h-8 flex items-center justify-center bg-red-100 text-red-800 rounded-md" data-val="z">Z</div>
-                                </div>
-                            </div>
+
+                <div class="my-12">
+                    <div class="max-w-4xl mx-auto card p-6 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-4 text-center">The Formal Definition</h3>
+                        <p class="text-gray-700 mb-4">
+                            Mathematically, a function \( f \) from a set \( A \) (the domain) to a set \( B \) (the codomain) is a subset of the Cartesian product \( A \times B \) such that for every element \( a \in A \), there is exactly one element \( b \in B \) for which \( (a, b) \) is in the subset. We write this as \( f: A \to B \).
+                        </p>
+                        <div class="bg-indigo-50 p-4 rounded-lg text-center font-mono text-indigo-800">
+                            \( f = \{ (a, b) | a \in A \text{ and } b \in B, \text{ and for each } a \in A, \text{ there is a unique } b \text{ such that } (a,b) \in f \} \)
                         </div>
-                        <p class="text-center text-sm text-gray-500 mt-4">Click an element in the Domain to see its mapping.</p>
+                        <p class="mt-4 text-gray-600">This means two conditions must be met:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-gray-600">
+                            <li><strong>Total:</strong> Every element in the domain \(A\) must be mapped to some element in the codomain \(B\).</li>
+                            <li><strong>Well-defined:</strong> No element in the domain \(A\) can be mapped to more than one element in the codomain \(B\).</li>
+                        </ul>
                     </div>
-                    <div class="space-y-4">
-                        <div class="card p-6 rounded-lg">
-                            <h3 class="text-xl font-semibold mb-2">Domain</h3>
-                            <p class="text-gray-600">The complete set of all possible inputs for the function. In our example, it's {A, B, C}.</p>
+                </div>
+
+                <div class="my-12">
+                    <h3 class="text-2xl font-bold text-center mb-6">Visualizing the Rule</h3>
+                                        <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                        <div class="card p-6 rounded-lg border-2 border-green-400">
+                            <h4 class="text-xl font-semibold text-center mb-4 text-green-700">This IS a Function</h4>
+                            <p class="text-sm text-center text-gray-600 mb-4">Each element in the Domain maps to exactly one element in the Codomain.</p>
+                            <div class="flex justify-around items-center h-40 relative">
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Domain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">1</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">2</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">3</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Codomain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">A</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">B</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">C</div>
+                                    </div>
+                                </div>
+                                <!-- Arrows -->
+                                <svg class="absolute w-full h-full top-0 left-0" style="pointer-events: none;">
+                                    <defs>
+                                        <marker id="arrowhead-good" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                            <polygon points="0 0, 10 3.5, 0 7" fill="#2E7D32"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- 1 -> A -->
+                                    <line x1="80" y1="45" x2="180" y2="45" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrowhead-good)"/>
+                                    <!-- 2 -> A -->
+                                    <line x1="80" y1="95" x2="180" y2="55" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrowhead-good)"/>
+                                    <!-- 3 -> B -->
+                                    <line x1="80" y1="140" x2="180" y2="105" stroke="#2E7D32" stroke-width="2" marker-end="url(#arrowhead-good)"/>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="card p-6 rounded-lg">
-                            <h3 class="text-xl font-semibold mb-2">Codomain & Range</h3>
-                            <p class="text-gray-600"><strong class="text-gray-800">Codomain:</strong> The set of all <span class="highlight">allowed</span> outputs. Here, {X, Y, Z}.</p>
-                             <p class="text-gray-600 mt-2"><strong class="text-gray-800">Range:</strong> The set of <span class="highlight">actual</span> outputs the function produces. The range is always a subset of the codomain. For our example f(A)=X, f(B)=Y, f(C)=Y, the range is {X, Y}.</p>
+                        <div class="card p-6 rounded-lg border-2 border-red-400">
+                            <h4 class="text-xl font-semibold text-center mb-4 text-red-700">This IS NOT a Function</h4>
+                            <p class="text-sm text-center text-gray-600 mb-4">Element '1' in the Domain maps to two different elements in the Codomain.</p>
+                             <div class="flex justify-around items-center h-40 relative">
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Domain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">1</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">2</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">3</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Codomain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">A</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">B</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">C</div>
+                                    </div>
+                                </div>
+                                <!-- Arrows -->
+                                <svg class="absolute w-full h-full top-0 left-0" style="pointer-events: none;">
+                                     <defs>
+                                        <marker id="arrowhead-bad" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                            <polygon points="0 0, 10 3.5, 0 7" fill="#C62828"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- 1 -> A -->
+                                    <line x1="80" y1="45" x2="180" y2="45" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                    <!-- 2 -> A -->
+                                    <line x1="80" y1="95" x2="180" y2="50" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                    <!-- 2 -> B -->
+                                    <line x1="80" y1="140" x2="180" y2="105" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                    <line x1="80" y1="45" x2="180" y2="125" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                </svg>
+                            </div>
                         </div>
+
+                        <div class="card p-6 rounded-lg border-2 border-red-400">
+                            <h4 class="text-xl font-semibold text-center mb-4 text-red-700">This IS NOT a Function</h4>
+                            <p class="text-sm text-center text-gray-600 mb-4">Element '3' in the Domain has no mapping in the Codomain.</p>
+                             <div class="flex justify-around items-center h-40 relative">
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Domain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">1</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">2</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-full">3</div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <h5 class="font-bold mb-2">Codomain</h5>
+                                    <div class="space-y-2">
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">A</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">B</div>
+                                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 rounded-full">C</div>
+                                    </div>
+                                </div>
+                                <!-- Arrows -->
+                                <svg class="absolute w-full h-full top-0 left-0" style="pointer-events: none;">
+                                     <defs>
+                                        <marker id="arrowhead-bad" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                            <polygon points="0 0, 10 3.5, 0 7" fill="#C62828"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- 1 -> A -->
+                                    <line x1="80" y1="45" x2="180" y2="45" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                    <!-- 2 -> A -->
+                                    <line x1="80" y1="95" x2="180" y2="95" stroke="#C62828" stroke-width="2" marker-end="url(#arrowhead-bad)"/>
+                                    
+                                    
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Domain</h3>
+                        <p class="text-gray-600">The complete set of all possible inputs for the function, as shown in the visualization.</p>
+                        <p class="mt-4 font-mono bg-blue-50 p-2 rounded text-center text-sm">Example: {1, 2, 3}</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Codomain</h3>
+                        <p class="text-gray-600">The set of all <span class="font-semibold">potential</span> outputs. The function's outputs must belong to this set.</p>
+                        <p class="mt-4 font-mono bg-red-50 p-2 rounded text-center text-sm">Example: {A, B, C}</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-2">Range</h3>
+                        <p class="text-gray-600">The set of <span class="font-semibold">actual</span> outputs the function produces. The range is a subset of (or equal to) the codomain.</p>
+                        <p class="mt-4 font-mono bg-green-50 p-2 rounded text-center text-sm">Example (for the valid function): {A, B}</p>
                     </div>
                 </div>
             </section>
@@ -231,69 +350,217 @@
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <!-- Injective -->
-                    <div class="card p-6 rounded-lg">
+                    <div class="card p-6 rounded-lg flex flex-col">
                         <div class="text-center">
                             <h3 class="text-2xl font-semibold mb-2">Injective</h3>
                             <p class="text-gray-500 mb-4">(One-to-One)</p>
                         </div>
                         <div class="mb-4">
-                            <p class="mb-2"><strong>Definition:</strong> A function f: X → Y is injective if:</p>
-                            <p class="text-center font-mono mb-3">∀a, b ∈ X, f(a) = f(b) ⇒ a = b</p>
-                            <p class="text-sm text-gray-600">(Different inputs give different outputs)</p>
+                            <p class="mb-2"><strong>Definition:</strong> A function where every distinct element of the domain maps to a distinct element of the codomain.</p>
+                            <p class="text-center font-mono my-2 p-2 bg-gray-100 rounded">\( \forall a, b \in X, f(a) = f(b) \Rightarrow a = b \)</p>
                         </div>
                         <div class="bg-blue-50 p-4 rounded-lg mb-4">
                             <p class="font-medium mb-2">Example:</p>
-                            <p>f: ℤ → ℤ, f(x) = 2x + 1</p>
-                            <p class="text-sm text-gray-600">(Each output has exactly one input)</p>
+                            <p class="font-mono">\(f: \mathbb{Z} \rightarrow \mathbb{Z}, f(x) = 2x + 1\)</p>
+                            <p class="text-sm text-gray-600 mt-1">(Each output has exactly one input)</p>
                         </div>
-                        <div class="mapping-area mx-auto bg-gray-50 rounded-lg" id="injective-viz"></div>
-                        <div class="mt-4 flex justify-center space-x-2">
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('injective-viz', 'injective-good')">Valid Example</button>
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('injective-viz', 'injective-bad')">Invalid Example</button>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="40" r="10" fill="#BFDBFE"></circle><text x="21" y="44" font-size="10">1</text>
+                                <circle cx="25" cy="75" r="10" fill="#BFDBFE"></circle><text x="21" y="79" font-size="10">2</text>
+                                <circle cx="25" cy="110" r="10" fill="#BFDBFE"></circle><text x="21" y="114" font-size="10">3</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="30" r="10" fill="#FECACA"></circle><text x="172" y="34" font-size="10">A</text>
+                                <circle cx="175" cy="65" r="10" fill="#FECACA"></circle><text x="172" y="69" font-size="10">B</text>
+                                <circle cx="175" cy="100" r="10" fill="#FECACA"></circle><text x="172" y="104" font-size="10">C</text>
+                                <circle cx="175" cy="135" r="10" fill="#FECACA"></circle><text x="172" y="139" font-size="10">D</text>
+                                <line x1="35" y1="40" x2="165" y2="30" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="75" x2="165" y2="65" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="110" x2="165" y2="100" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
                         </div>
                     </div>
                     <!-- Surjective -->
-                    <div class="card p-6 rounded-lg">
+                    <div class="card p-6 rounded-lg flex flex-col">
                         <div class="text-center">
                             <h3 class="text-2xl font-semibold mb-2">Surjective</h3>
                             <p class="text-gray-500 mb-4">(Onto)</p>
                         </div>
                         <div class="mb-4">
-                            <p class="mb-2"><strong>Definition:</strong> A function f: X → Y is surjective if:</p>
-                            <p class="text-center font-mono mb-3">∀y ∈ Y, ∃x ∈ X such that f(x) = y</p>
-                            <p class="text-sm text-gray-600">(Every element in the codomain is mapped to by some element in the domain)</p>
+                            <p class="mb-2"><strong>Definition:</strong> A function where every element in the codomain has at least one corresponding element in the domain.</p>
+                            <p class="text-center font-mono my-2 p-2 bg-gray-100 rounded">\( \forall y \in Y, \exists x \in X : f(x) = y \)</p>
                         </div>
                         <div class="bg-blue-50 p-4 rounded-lg mb-4">
                             <p class="font-medium mb-2">Example:</p>
-                            <p>f: ℝ → [0, ∞), f(x) = x²</p>
-                            <p class="text-sm text-gray-600">(Every non-negative real number is a square of some real number)</p>
+                            <p class="font-mono">\(f: \mathbb{R} \rightarrow [0, \infty), f(x) = x^2\)</p>
+                            <p class="text-sm text-gray-600 mt-1">(Every non-negative real number is a square of some real number)</p>
                         </div>
-                        <div class="mapping-area mx-auto bg-gray-50 rounded-lg" id="surjective-viz"></div>
-                        <div class="mt-4 flex justify-center space-x-2">
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('surjective-viz', 'surjective-good')">Valid Example</button>
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('surjective-viz', 'surjective-bad')">Invalid Example</button>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="30" r="10" fill="#BFDBFE"></circle><text x="21" y="34" font-size="10">1</text>
+                                <circle cx="25" cy="65" r="10" fill="#BFDBFE"></circle><text x="21" y="69" font-size="10">2</text>
+                                <circle cx="25" cy="100" r="10" fill="#BFDBFE"></circle><text x="21" y="104" font-size="10">3</text>
+                                <circle cx="25" cy="135" r="10" fill="#BFDBFE"></circle><text x="21" y="139" font-size="10">4</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="40" r="10" fill="#FECACA"></circle><text x="172" y="44" font-size="10">A</text>
+                                <circle cx="175" cy="75" r="10" fill="#FECACA"></circle><text x="172" y="79" font-size="10">B</text>
+                                <circle cx="175" cy="110" r="10" fill="#FECACA"></circle><text x="172" y="114" font-size="10">C</text>
+                                <line x1="35" y1="30" x2="165" y2="40" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="65" x2="165" y2="75" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="100" x2="165" y2="110" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="135" x2="165" y2="75" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
                         </div>
                     </div>
                     <!-- Bijective -->
-                    <div class="card p-6 rounded-lg">
+                    <div class="card p-6 rounded-lg flex flex-col">
                         <div class="text-center">
                             <h3 class="text-2xl font-semibold mb-2">Bijective</h3>
-                            <p class="text-gray-500 mb-4">(One-to-One and Onto)</p>
+                            <p class="text-gray-500 mb-4">(Injective & Surjective)</p>
                         </div>
                         <div class="mb-4">
-                            <p class="mb-2"><strong>Definition:</strong> A function f: X → Y is bijective if it is both injective and surjective:</p>
-                            <p class="text-center font-mono mb-3">∀y ∈ Y, ∃!x ∈ X such that f(x) = y</p>
-                            <p class="text-sm text-gray-600">(Every element in the codomain is mapped to by exactly one element in the domain)</p>
+                            <p class="mb-2"><strong>Definition:</strong> A function that is both one-to-one and onto. Every element in the codomain is mapped by exactly one element from the domain.</p>
+                            <p class="text-center font-mono my-2 p-2 bg-gray-100 rounded">\( \forall y \in Y, \exists! x \in X : f(x) = y \)</p>
                         </div>
                         <div class="bg-blue-50 p-4 rounded-lg mb-4">
                             <p class="font-medium mb-2">Example:</p>
-                            <p>f: ℝ → ℝ, f(x) = x + 3</p>
-                            <p class="text-sm text-gray-600">(Every real number has exactly one pre-image)</p>
+                            <p class="font-mono">\(f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = x + 3\)</p>
+                            <p class="text-sm text-gray-600 mt-1">(Every real number has exactly one pre-image)</p>
                         </div>
-                        <div class="mapping-area mx-auto bg-gray-50 rounded-lg" id="bijective-viz"></div>
-                        <div class="mt-4 flex justify-center space-x-2">
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('bijective-viz', 'bijective-good')">Valid Example</button>
-                            <button class="btn-secondary px-4 py-2 rounded-md text-sm font-medium" onclick="drawMapping('bijective-viz', 'bijective-bad')">Invalid Example</button>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="40" r="10" fill="#BFDBFE"></circle><text x="21" y="44" font-size="10">1</text>
+                                <circle cx="25" cy="75" r="10" fill="#BFDBFE"></circle><text x="21" y="79" font-size="10">2</text>
+                                <circle cx="25" cy="110" r="10" fill="#BFDBFE"></circle><text x="21" y="114" font-size="10">3</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="40" r="10" fill="#FECACA"></circle><text x="172" y="44" font-size="10">A</text>
+                                <circle cx="175" cy="75" r="10" fill="#FECACA"></circle><text x="172" y="79" font-size="10">B</text>
+                                <circle cx="175" cy="110" r="10" fill="#FECACA"></circle><text x="172" y="114" font-size="10">C</text>
+                                <line x1="35" y1="40" x2="165" y2="40" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="75" x2="165" y2="75" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="110" x2="165" y2="110" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- Injective but not Surjective -->
+                    <div class="card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Injective (but not Surjective)</h3>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="40" r="10" fill="#BFDBFE"></circle><text x="21" y="44" font-size="10">1</text>
+                                <circle cx="25" cy="75" r="10" fill="#BFDBFE"></circle><text x="21" y="79" font-size="10">2</text>
+                                <circle cx="25" cy="110" r="10" fill="#BFDBFE"></circle><text x="21" y="114" font-size="10">3</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="30" r="10" fill="#FECACA"></circle><text x="172" y="34" font-size="10">A</text>
+                                <circle cx="175" cy="65" r="10" fill="#FECACA"></circle><text x="172" y="69" font-size="10">B</text>
+                                <circle cx="175" cy="100" r="10" fill="#FECACA"></circle><text x="172" y="104" font-size="10">C</text>
+                                <circle cx="175" cy="135" r="10" fill="#FECACA"></circle><text x="172" y="139" font-size="10">D</text>
+                                <line x1="35" y1="40" x2="165" y2="30" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="75" x2="165" y2="65" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="110" x2="165" y2="100" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-4"><strong>One-to-One:</strong> Yes (no two inputs share an output).<br><strong>Onto:</strong> No (element 'D' is not an output).</p>
+                    </div>
+
+                    <!-- Surjective but not Injective -->
+                    <div class="card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Surjective (but not Injective)</h3>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="30" r="10" fill="#BFDBFE"></circle><text x="21" y="34" font-size="10">1</text>
+                                <circle cx="25" cy="65" r="10" fill="#BFDBFE"></circle><text x="21" y="69" font-size="10">2</text>
+                                <circle cx="25" cy="100" r="10" fill="#BFDBFE"></circle><text x="21" y="104" font-size="10">3</text>
+                                <circle cx="25" cy="135" r="10" fill="#BFDBFE"></circle><text x="21" y="139" font-size="10">4</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="40" r="10" fill="#FECACA"></circle><text x="172" y="44" font-size="10">A</text>
+                                <circle cx="175" cy="75" r="10" fill="#FECACA"></circle><text x="172" y="79" font-size="10">B</text>
+                                <circle cx="175" cy="110" r="10" fill="#FECACA"></circle><text x="172" y="114" font-size="10">C</text>
+                                <line x1="35" y1="30" x2="165" y2="40" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="65" x2="165" y2="75" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="100" x2="165" y2="110" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="135" x2="165" y2="75" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-4"><strong>One-to-One:</strong> No (inputs '2' and '4' both map to 'B').<br><strong>Onto:</strong> Yes (every codomain element is an output).</p>
+                    </div>
+
+                    <!-- Neither Injective nor Surjective -->
+                    <div class="card p-6 rounded-lg flex flex-col">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Neither Injective nor Surjective</h3>
+                        <div class="h-48 flex-grow flex justify-center items-center p-4 bg-gray-50 rounded-lg mt-auto">
+                            <svg width="200" height="150" viewBox="0 0 200 150">
+                                <text x="25" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Domain</text>
+                                <circle cx="25" cy="40" r="10" fill="#BFDBFE"></circle><text x="21" y="44" font-size="10">1</text>
+                                <circle cx="25" cy="75" r="10" fill="#BFDBFE"></circle><text x="21" y="79" font-size="10">2</text>
+                                <circle cx="25" cy="110" r="10" fill="#BFDBFE"></circle><text x="21" y="114" font-size="10">3</text>
+                                <text x="145" y="15" font-family="sans-serif" font-size="12" font-weight="bold">Codomain</text>
+                                <circle cx="175" cy="30" r="10" fill="#FECACA"></circle><text x="172" y="34" font-size="10">A</text>
+                                <circle cx="175" cy="65" r="10" fill="#FECACA"></circle><text x="172" y="69" font-size="10">B</text>
+                                <circle cx="175" cy="100" r="10" fill="#FECACA"></circle><text x="172" y="104" font-size="10">C</text>
+                                <circle cx="175" cy="135" r="10" fill="#FECACA"></circle><text x="172" y="139" font-size="10">D</text>
+                                <line x1="35" y1="40" x2="165" y2="30" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="75" x2="165" y2="65" stroke="#60A5FA" stroke-width="1.5"></line>
+                                <line x1="35" y1="110" x2="165" y2="65" stroke="#60A5FA" stroke-width="1.5"></line>
+                            </svg>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-4"><strong>One-to-One:</strong> No (inputs '2' and '3' both map to 'B').<br><strong>Onto:</strong> No (elements 'C' and 'D' are not outputs).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Counting Functions Section -->
+            <section id="counting-functions" class="content-section">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Counting Number of Functions</h2>
+                    <p class="max-w-3xl mx-auto text-gray-600">
+                        Let \(A\) and \(B\) be two finite sets with \(|A| = m\) and \(|B| = n\). We can count the number of functions with specific properties that can be defined from \(A\) to \(B\).
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Total Functions -->
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-4">Total Number of Functions</h3>
+                        <p class="mb-4">Each of the \(m\) elements in set \(A\) can be mapped to any of the \(n\) elements in set \(B\).</p>
+                        <p class="text-center font-mono text-lg my-4 p-4 bg-gray-100 rounded">\( n^m \)</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="font-medium mb-2">Example:</p>
+                            <p>If \(|A| = 3\) and \(|B| = 2\), the total number of functions is \(2^3 = 8\).</p>
+                        </div>
+                    </div>
+                    <!-- Injective Functions -->
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-4">Injective (One-to-One)</h3>
+                        <p class="mb-4">Possible only if \(m \le n\). The number of injective functions is given by the permutation formula.</p>
+                        <p class="text-center font-mono text-lg my-4 p-4 bg-gray-100 rounded">\( P(n, m) = \frac{n!}{(n-m)!} \)</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="font-medium mb-2">Example:</p>
+                            <p>If \(|A| = 3\) and \(|B| = 4\), the number of injective functions is \(P(4,3) = \frac{4!}{1!} = 24\).</p>
+                        </div>
+                    </div>
+                    <!-- Surjective Functions -->
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-4">Surjective (Onto)</h3>
+                        <p class="mb-4">Possible only if \(m \ge n\). The formula uses the principle of inclusion-exclusion.</p>
+                        <p class="text-center font-mono text-lg my-4 p-4 bg-gray-100 rounded">\( \sum_{k=0}^{n} (-1)^k \binom{n}{k} (n-k)^m \)</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="font-medium mb-2">Example:</p>
+                            <p>If \(|A| = 4\) and \(|B| = 3\), the number of surjective functions is 36.</p>
+                        </div>
+                    </div>
+                    <!-- Bijective Functions -->
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-4">Bijective (One-to-One & Onto)</h3>
+                        <p class="mb-4">Possible only if \(m = n\). The number of bijective functions is the number of permutations of the set.</p>
+                        <p class="text-center font-mono text-lg my-4 p-4 bg-gray-100 rounded">\( n! \)</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="font-medium mb-2">Example:</p>
+                            <p>If \(|A| = 3\) and \(|B| = 3\), the number of bijective functions is \(3! = 6\).</p>
                         </div>
                     </div>
                 </div>
@@ -693,25 +960,51 @@
                      </div>
                      <div class="flex flex-wrap justify-center gap-2 mt-4" id="complexity-toggles"></div>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="card p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold mb-2">Cryptography</h3>
-                        <p class="text-gray-600">One-way hash functions are critical for security. They create a digital "fingerprint" of data that is easy to compute but virtually impossible to reverse. This ensures data integrity (checking if a file has been modified) and secure password storage.</p>
+                <div class="mt-16">
+                    <div class="text-center mb-12">
+                        <h3 class="text-3xl font-bold mb-4">Advanced Applications in AI & Computer Science</h3>
+                        <p class="max-w-3xl mx-auto text-gray-600">
+                            Functions are the core building blocks in many advanced fields, enabling everything from machine learning models to secure communications.
+                        </p>
                     </div>
-                    <div class="card p-6 rounded-lg">
-                        <h3 class="text-xl font-semibold mb-2">Data Structures</h3>
-                        <p class="text-gray-600">Hash functions are the engine behind hash tables, one of the most important data structures. They provide a super-fast way to store and retrieve data by converting a key (like a username) into an array index.</p>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- AI Applications -->
+                        <div class="card p-6 rounded-lg flex flex-col">
+                            <h4 class="text-xl font-semibold mb-4">Artificial Intelligence</h4>
+                            <div class="space-y-4 flex-grow">
+                                <div>
+                                    <h5 class="font-semibold text-lg">Activation Functions</h5>
+                                    <p class="text-gray-600">In neural networks, functions like <strong>Sigmoid</strong>, <strong>ReLU</strong>, and <strong>Softmax</strong> introduce non-linearity. This allows models to learn from complex, real-world data that isn't separable by a straight line.</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Loss Functions</h5>
+                                    <p class="text-gray-600">Functions such as <strong>Mean Squared Error (MSE)</strong> or <strong>Cross-Entropy</strong> calculate a model's error during training. The value of this "loss" guides the optimization process, helping the model adjust its parameters to make more accurate predictions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CS Applications -->
+                        <div class="card p-6 rounded-lg flex flex-col">
+                            <h4 class="text-xl font-semibold mb-4">Core Computer Science</h4>
+                            <div class="space-y-4 flex-grow">
+                                <div>
+                                    <h5 class="font-semibold text-lg">Hash Functions</h5>
+                                    <p class="text-gray-600">Essential for building efficient data structures like hash tables. They map large data sets to fixed-size outputs, enabling near-instant data retrieval, which is critical for databases and caching.</p>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold text-lg">Cryptography</h5>
+                                    <p class="text-gray-600">One-way functions are the foundation of modern cryptography. They are used to create digital signatures, verify data integrity, and securely store sensitive information like passwords.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const sections = document.querySelectorAll('.content-section');
-            let complexityChart;
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const navLinks = document.querySelectorAll('.nav-link');
+                const sections = document.querySelectorAll('.content-section');
+                let complexityChart;
+
 
             function navigateTo(hash) {
                 navLinks.forEach(link => {
