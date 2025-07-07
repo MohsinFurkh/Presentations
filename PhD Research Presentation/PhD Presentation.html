@@ -534,10 +534,13 @@
                     University of Hyderabad
                 </div>
                 
-                <div style="margin-top: 40px; padding: 25px; background: rgba(74, 108, 247, 0.1); border-radius: 10px; max-width: 800px; margin: 40px auto 0;">
-                    <div style="font-size: 1.6rem; font-weight: 600; color: #4a6cf7; margin-bottom: 10px;">UPES Dehradun</div>
-                    <div style="font-size: 1.5rem; color: #2c3e50; font-weight: 500; margin-bottom: 10px;">Teaching & Research Position Interview</div>
-                    <div style="font-style: italic; color: #6c757d; margin-top: 10px; font-size: 1.3rem;">July 3, 2025</div>
+                <div style="margin-top: 40px; max-width: 800px; margin: 40px auto 0; text-align: center;">
+                    <img src="hcu.png" alt="University of Hyderabad Logo" style="max-width: 400px; height: auto; margin-bottom: 20px;">
+                    <div id="currentDate" style="font-style: italic; color: #6c757d; margin-top: 10px; font-size: 1.3rem;"></div>
+                    <script>
+                        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+                    </script>
                 </div>
             </div>
         </div>
@@ -1845,6 +1848,11 @@
                         <li>Address challenges in <strong>medical AI deployment</strong> through efficient learning paradigms</li>
                     </ul>
                 </div>
+            </div>
+            
+            <div class="author-info">
+                <p style="font-size: 1.6rem; color: #667eea;"><strong>Thank you for your attention</strong></p>
+                <p>Questions & Discussion</p>
             </div>
         </div>
 
